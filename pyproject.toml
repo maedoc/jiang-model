@@ -1,0 +1,20 @@
+[project]
+name = "dde_model"
+version = "0.1.0"
+description = "Delay Differential Equation model for geopolitical resource dynamics"
+requires-python = ">=3.9"
+dependencies = [
+    "jax",
+    "jaxlib",
+    "numpy",
+    "matplotlib",
+    "scipy",
+    "pandas",
+    "requests",
+    "wbdata",
+    "pycountry",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
