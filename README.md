@@ -1,206 +1,187 @@
 # Geopolitical Resource Dynamics Model
 
-A nonlinear dynamical systems model simulating resource, economic, and political interactions across 12 geopolitical regions with 15 state variables per region (180 ODEs total). The model captures feedback loops between resource stocks, political stability, inequality, sovereign debt, prices, and financial variables.
+A nonlinear dynamical systems model simulating resource, economic, and
+political interactions across 12 geopolitical regions.  Each region carries
+15 state variables (180 coupled ODEs), capturing feedback loops between
+resource stocks, political stability, inequality, sovereign debt, commodity
+prices, and financial contagion.
+
+The model is designed for **counterfactual analysis**: define a baseline,
+layer on interventions (chokepoints, sanctions, supply shocks), and compare
+the resulting trajectories.
+
+## Quick Start
+
+```bash
+# Create virtual environment and install dependencies
+python -m venv env && source env/bin/activate
+pip install -r requirements.txt
+
+# Run a baseline simulation
+python -c "
+from geopolitical_model import GeopoliticalModel, load_parameters
+model = GeopoliticalModel(load_parameters())
+traj = model.simulate(t_span=(0, 365))
+print(traj.summary())
+"
+```
+
+## Example Scripts
+
+| Script | Description |
+|--------|-------------|
+| `example_hormuz.py` | Baseline vs Hormuz closure counterfactual |
+| `example_sanctions.py` | Russia oil embargo and bilateral sanctions |
+| `example_sensitivity.py` | Parameter sweeps and Morris screening |
+| `example_price_trade.py` | Price-mediated trade extension |
+
+Each script generates PNG figures and prints summary tables to stdout.
+
+## Architecture
+
+```
+geopolitical_model.py    Core ODE system (180 equations)
+model_config.py          ~60 structural coefficients (ModelConfig dataclass)
+interventions.py         Composable time-resolved interventions
+trajectory.py            Structured output with named access & inverse transforms
+scenarios.py             Scenario definition and comparison runner
+sensitivity.py           Morris screening & parameter sweeps
+historical_calibration.py   Calibration framework for crisis periods
+data_loader.py           Real-world data loading and aggregation
+real_params.json         Regional parameters for 12 regions
+```
 
 ## Model Overview
 
-### Key Features
-- **12 geopolitical regions**: North America, Europe, Russia, Middle East, China, India, Japan, Southeast Asia, Australia/New Zealand, Africa, South America, Central Asia/Caucasus
-- **15 state variables per region**: 
-  1. Oil stock (log-transformed)
-  2. Fertilizer stock (log-transformed)
-  3. Political stability (0-1)
-  4. Water stock (log-transformed)
-  5. Military expenditure (log-transformed)
-  6. Inequality (Gini, logit-transformed)
-  7. Sovereign debt/GDP ratio (log-transformed)
-  8. Oil price (log-transformed)
-  9. Fertilizer price (log-transformed)
-  10. Water price (log-transformed)
-  11. Inflation rate
-  12. Interest rate
-  13. Exchange rate (log-transformed)
-  14. Bond yield
-  15. 30-day moving average of exchange rate (log-transformed)
+### Regions (12)
+
+| Idx | Region | Idx | Region |
+|-----|--------|-----|--------|
+| 0 | North America | 6 | Japan |
+| 1 | Europe | 7 | Southeast Asia |
+| 2 | Russia | 8 | Australia / NZ |
+| 3 | Middle East | 9 | Africa (sub-Saharan) |
+| 4 | China | 10 | South America |
+| 5 | India | 11 | Central Asia / Caucasus |
+
+### State Variables (15 per region)
+
+| Idx | Variable | Transform |
+|-----|----------|-----------|
+| 0–1 | Oil stock, Fertilizer stock | log(1+x) |
+| 2 | Political stability [0,1] | logit |
+| 3 | Water stock | log(1+x) |
+| 4 | Military expenditure | log(1+x) |
+| 5 | Inequality (Gini) [0,1] | logit |
+| 6 | Sovereign debt / GDP | log(1+x) |
+| 7–9 | Oil, Fertilizer, Water price | log(1+x) |
+| 10 | Inflation rate | none |
+| 11 | Interest rate | none |
+| 12 | Exchange rate | log(1+x) |
+| 13 | Bond yield | none |
+| 14 | Exchange rate 30-day avg | log(1+x) |
 
 ### Core Dynamics
-- **Resource flows**: Production, consumption, and bilateral trade with half-saturation limits
-- **Political stability**: Affected by resource abundance, social unrest, and regional coupling
-- **Financial coupling**: Interest rate and exchange rate spillovers between regions
-- **Nonlinear thresholds**: Debt crises, currency crises, social unrest, resource scarcity
-- **Hormuz disruption**: Configurable disruption of Middle East exports (day 100 default)
 
-### Model Evolution
-- **Original**: 3-region Delay Differential Equation (DDE) model with shipping delays
-- **Current**: 12-region Ordinary Differential Equation (ODE) model without delays (simplified for numerical stability)
-- **Rationale**: ODE framework more suitable for stiff systems with many variables; delays can be reintroduced as needed
-- **Backward compatibility**: Original DDE model preserved in `dde_model.py` for reference
+- **Resources**: Production (stability-modulated), consumption, bilateral
+  trade with Monod half-saturation limits
+- **Stability**: Decay, resource-abundance gain, social unrest coupling,
+  inter-region diffusion (logistic factor at boundaries)
+- **Debt**: Primary deficit, interest–growth differential, mean reversion,
+  austerity trigger via sigmoid
+- **Prices**: Supply–demand imbalance, mean reversion to equilibrium
+- **Inflation**: Weighted log-price derivatives
+- **Interest rate**: Modified Taylor rule with debt gap and risk premium
+- **Exchange rate**: Trade balance, capital flows, currency crisis dynamics
+- **Bond yield**: Tracks interest rate + debt crisis premium
 
-## Recent Accomplishments
+See [MATH_SPEC.md](MATH_SPEC.md) for the complete equation set.
 
-### 1. **Stiffness Resolution**
-- **Problem**: Original price balance formula `(consumption - production) / (production + EPS)` caused extreme stiffness when production = 0 (Japan oil)
-- **Solution**: Normalized balance `(consumption - production) / (consumption + production + EPS)` bounds derivative to [-1, 1]
-- **Result**: System remains stiff but manageable with BDF solver; derivatives reduced from 10⁸ to ~10⁰
+### Nonlinear Thresholds
 
-### 2. **Debt Dynamics Stabilization**
-- **Problem**: Debt exploded (>10²⁷) due to unscaled annual interest rates in daily ODE
-- **Solution**: Added `DAILY_SCALE = 1/365.25` to convert annual rates to daily
-- **Fixed equation**: `(interest * DAILY_SCALE - growth_rate) * debt`
-- **Result**: Debt now bounded between -1.0 and 2.62 over 365-day simulations
+| Crisis | Trigger | Effect |
+|--------|---------|--------|
+| Debt crisis | Debt/GDP > 1.0 | Suppresses military, adds risk premium |
+| Currency crisis | 30-day depreciation > 20% | Capital flight |
+| Social unrest | Inequality > 0.6 AND inflation > 0.1 | Reduces stability |
+| Water scarcity | Water < 10% of initial | Water price spike |
 
-### 3. **Performance Optimization**
-- **Numba acceleration**: 80x speedup over pure Python implementation
-- **Maintained correctness**: Numba output matches original within numerical tolerance
-- **Efficient integration**: SciPy's BDF solver handles stiffness; RK4 removed due to instability
+## Intervention API
 
-### 4. **Real-World Parameterization**
-- **Data sources**: Oil/fertilizer production/consumption from Energy Institute (2023), political stability from World Bank WGI, financial data from central banks
-- **Trade matrices**: Estimated from production-consumption surpluses
-- **Calibration**: Historical scenarios (1973 oil crisis, 2008 financial crisis)
-
-## Model Specifications
-
-### ODE System
-- **Total equations**: 180 (12 regions × 15 variables)
-- **Integration method**: SciPy `solve_ivp` with BDF (Backward Differentiation Formula)
-- **Time span**: Configurable, tested up to 365 days
-- **Solver tolerances**: `rtol=1e-6`, `atol=1e-8` (adjustable)
-
-### Key Nonlinearities
-1. **Trade limitation**: `resource / (resource + K_HALF)` with `K_HALF = 1000`
-2. **Debt crisis**: Sigmoid trigger when debt > 100% GDP
-3. **Currency crisis**: 30-day depreciation > 20%
-4. **Social unrest**: Inequality > 0.6 AND inflation > 0.1
-5. **Resource scarcity**: Water stock < 10% of initial
-6. **Austerity factor**: Sigmoid reduction in government spending near debt ceiling
-
-### Transformations for Stability
-- **Positive variables** (oil, fertilizer, water, military, debt, prices, exchange): `log(1 + x)`
-- **Bounded variables** (stability, inequality): logit transform
-- **Untransformed**: Inflation, interest rate, bond yield
-
-## Assumptions and Limitations
-
-### 1. **Economic Simplifications**
-- GDP proxy: `oil_prod × stability + fert_prod × stability`
-- Government spending: 1% of GDP × military expenditure
-- Tax revenue: 30% of GDP × stability
-- Primary deficit drives debt accumulation
-
-### 2. **Financial Market Assumptions**
-- Taylor rule: Interest rate responds to inflation and debt deviations
-- Exchange rate: Influenced by trade balance and capital flows
-- Bond yield: Follows interest rate plus debt crisis premium
-- No explicit banking sector or credit creation
-
-### 3. **Resource Dynamics**
-- Water: Simplified availability vs. consumption (no climate variability)
-- No substitution between resources (oil ↔ fertilizer ↔ water)
-- Trade flows proportional to surpluses (not price-mediated)
-- No strategic reserves or stockpiling policies
-
-### 4. **Political and Social Dynamics**
-- Stability coupling: Diffusive spread between regions
-- Inequality: Increases with low stability and high debt
-- Military expenditure: Grows with GDP, reduced by debt crisis
-- No explicit regime changes or civil wars
-
-### 5. **Numerical Considerations**
-- System is stiff due to trade nonlinearities and financial coupling
-- BDF solver required; explicit methods (RK4) unstable
-- Some variables may require clipping to prevent numerical overflow
-- Daily time scale with annual-rate conversions
-
-## Usage
-
-### Installation
-```bash
-cd dde_model
-python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-pip install -r requirements.txt
-```
-
-### Basic Simulation
 ```python
-from ode_model_extended import load_parameters, ExtendedODEModel
+from interventions import hormuz_closure, russia_oil_embargo, bilateral_sanction
+from interventions import EUROPE, RUSSIA
 
-params = load_parameters("real_params.json")
-model = ExtendedODEModel(params)
-sol = model.simulate(t_span=(0.0, 365.0), method="BDF", rtol=1e-6, atol=1e-8)
-model.plot_results(sol)
+# Pre-built chokepoint
+iv = hormuz_closure(onset_day=100, severity=0.8)
+
+# Custom bilateral sanction
+iv2 = bilateral_sanction("EU-Russia oil", sender=RUSSIA, receiver=EUROPE,
+                          severity=0.9, ramp_days=30)
 ```
 
-### Numba-Accelerated Version
+Interventions are composable and modify trade matrices / production arrays
+at each solver time step.  See `interventions.py` for the full protocol.
+
+## Scenario Comparison
+
 ```python
-from ode_model_extended_numba import ExtendedODEModelNumba
+from scenarios import Scenario, compare_scenarios
+from interventions import hormuz_closure
 
-model = ExtendedODEModelNumba(params)  # Automatically uses Numba if available
-sol = model.simulate(t_span=(0.0, 365.0))
+baseline = Scenario("Baseline")
+hormuz = Scenario("Hormuz", interventions=[hormuz_closure()])
+
+traj_b, traj_h, cmp = compare_scenarios(baseline, hormuz)
+print(cmp.max_absolute_impact("oil_stock"))
 ```
 
-### Validation and Testing
-```bash
-# Check stability and bounds
-python3 check_stability_and_bounds.py
+## Configuration
 
-# Test Numba acceleration
-python3 test_numba_acceleration.py
+All ~60 structural coefficients live in `ModelConfig`:
 
-# Run 365-day validation
-python3 validate_365.py
+```python
+from model_config import ModelConfig
+
+cfg = ModelConfig(trade_scale=0.5, price_trade_enabled=True)
+cfg.to_json("my_config.json")
+cfg2 = ModelConfig.from_json("my_config.json")
 ```
 
-## Key Files
+## Sensitivity Analysis
 
-### Core Implementation
-- `ode_model_extended.py` - Main ODE model with 15 variables per region
-- `ode_model_extended_numba.py` - Numba-accelerated version (80x speedup)
-- `data_loader.py` - Real-world data loading and aggregation
-- `real_params.json` - Generated parameters for 12 regions
+```python
+from sensitivity import parameter_sweep, morris_screening
 
-### Testing and Validation
-- `check_stability_and_bounds.py` - Analyzes stiffness and variable bounds
-- `test_numba_acceleration.py` - Verifies Numba correctness and performance
-- `validate_365.py` - 365-day simulation test
-- `debug_debt.py` - Debt dynamics debugging
+# Sweep trade_scale from 0.001 to 1.0
+vals, metrics = parameter_sweep("trade_scale", np.linspace(0.001, 1.0, 20))
 
-### Historical Calibration
-- `historical_calibration.py` - Calibration framework for crisis periods
-- `params_1973.json`, `params_2008.json` - Calibrated parameters
-- `generate_calibrated_params.py` - Parameter generation for historical scenarios
+# Morris screening of top parameters
+results = morris_screening(["trade_scale", "price_response", "tax_rate"])
+```
 
-## Next Steps
+## Calibration
 
-### Short-term (Implementation Ready)
-1. **Additional choke points**: Malacca Strait, Suez Canal with configurable disruptions
-2. **Policy interventions**: Sanctions, strategic reserves, austerity packages
-3. **Scenario analysis**: Comparative simulations with/without interventions
-4. **Enhanced visualization**: Interactive dashboards, regional heatmaps
+```python
+from historical_calibration import HistoricalCalibrator
 
-### Medium-term (Requires Design)
-5. **Stochastic elements**: Random disruptions, policy uncertainty
-6. **Price-mediated trade**: Endogenous trade flows based on price differentials
-7. **Financial sector**: Banking system, credit availability, sovereign risk spreads
-8. **Climate variability**: Water availability shocks, agricultural impacts
+cal = HistoricalCalibrator(target_csv="historical_1973.csv")
+best_params = cal.calibrate()
+```
 
-### Long-term (Research Directions)
-9. **Machine learning calibration**: Bayesian inference for parameter estimation
-10. **Network analysis**: Graph-theoretic study of systemic risk propagation
-11. **Multi-scale modeling**: Coupling with agent-based regional models
-12. **Policy optimization**: Reinforcement learning for optimal intervention timing
+## Data Sources
 
-## Performance Notes
-- **Numba acceleration**: 80x speedup crucial for parameter sweeps and sensitivity analysis
-- **Memory usage**: ~180 state variables × time points (manageable for 365 days)
-- **Integration time**: ~1-2 seconds for 365-day simulation with BDF solver
-- **Parallelization**: Region-level computations already vectorized; trade loops serial
+- **Energy**: Energy Institute Statistical Review (2023) — oil/fertilizer production & consumption
+- **Political**: World Bank Worldwide Governance Indicators — political stability
+- **Financial**: Central banks, IMF — interest rates, debt/GDP, exchange rates
+- **Trade matrices**: Estimated from production–consumption surpluses
 
 ## References
-- **Data sources**: Energy Institute Statistical Review (2023), World Bank WGI, FAO
-- **Methodology**: Inspired by macroeconomic DSGE models and ecological Lotka-Volterra systems
-- **Software**: SciPy for ODE integration, Numba for acceleration, Matplotlib for visualization
+
+- Methodology inspired by macroeconomic DSGE models and ecological Lotka–Volterra systems
+- SciPy BDF solver for stiff ODE integration
+- NumPy for vectorized computation
 
 ## License
+
 MIT

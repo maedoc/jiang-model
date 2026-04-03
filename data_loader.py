@@ -4,7 +4,6 @@ Data loading and preprocessing for real-world geopolitical resource dynamics.
 
 import pandas as pd
 import numpy as np
-import jax.numpy as jnp
 from typing import Dict, List, Tuple
 
 try:
@@ -734,42 +733,42 @@ def real_world_parameters(year: int = 2023) -> Dict:
 
     # Convert to JAX arrays
     params = {}
-    params["oil_production"] = jnp.array(oil_production)
-    params["oil_consumption"] = jnp.array(oil_consumption)
-    params["fertilizer_production"] = jnp.array(fertilizer_production)
-    params["fertilizer_consumption"] = jnp.array(fertilizer_consumption)
-    params["stability_decay"] = jnp.array(stability_decay)
-    params["stability_gain"] = jnp.array(stability_gain)
-    params["oil_trade"] = jnp.array(oil_trade)
-    params["fertilizer_trade"] = jnp.array(fertilizer_trade)
-    params["stability_coupling"] = jnp.array(stability_coupling)
-    params["political_stability"] = jnp.array(stability)
+    params["oil_production"] = np.array(oil_production)
+    params["oil_consumption"] = np.array(oil_consumption)
+    params["fertilizer_production"] = np.array(fertilizer_production)
+    params["fertilizer_consumption"] = np.array(fertilizer_consumption)
+    params["stability_decay"] = np.array(stability_decay)
+    params["stability_gain"] = np.array(stability_gain)
+    params["oil_trade"] = np.array(oil_trade)
+    params["fertilizer_trade"] = np.array(fertilizer_trade)
+    params["stability_coupling"] = np.array(stability_coupling)
+    params["political_stability"] = np.array(stability)
 
     # New variables
     water_availability, water_consumption = load_water_data()
-    params["water_availability"] = jnp.array(water_availability)
-    params["water_consumption"] = jnp.array(water_consumption)
+    params["water_availability"] = np.array(water_availability)
+    params["water_consumption"] = np.array(water_consumption)
 
     military_expenditure, military_production = load_military_data()
-    params["military_expenditure"] = jnp.array(military_expenditure)
-    params["military_production"] = jnp.array(military_production)
+    params["military_expenditure"] = np.array(military_expenditure)
+    params["military_production"] = np.array(military_production)
 
     inequality = load_inequality_data()
-    params["inequality"] = jnp.array(inequality)
+    params["inequality"] = np.array(inequality)
 
     debt_to_gdp = load_debt_data()
-    params["debt_to_gdp"] = jnp.array(debt_to_gdp)
+    params["debt_to_gdp"] = np.array(debt_to_gdp)
 
     oil_price, fertilizer_price, water_price = load_price_data()
-    params["oil_price"] = jnp.array(oil_price)
-    params["fertilizer_price"] = jnp.array(fertilizer_price)
-    params["water_price"] = jnp.array(water_price)
+    params["oil_price"] = np.array(oil_price)
+    params["fertilizer_price"] = np.array(fertilizer_price)
+    params["water_price"] = np.array(water_price)
 
     inflation, interest_rate, exchange_rate, bond_yield = load_financial_data()
-    params["inflation"] = jnp.array(inflation)
-    params["interest_rate"] = jnp.array(interest_rate)
-    params["exchange_rate"] = jnp.array(exchange_rate)
-    params["bond_yield"] = jnp.array(bond_yield)
+    params["inflation"] = np.array(inflation)
+    params["interest_rate"] = np.array(interest_rate)
+    params["exchange_rate"] = np.array(exchange_rate)
+    params["bond_yield"] = np.array(bond_yield)
 
     return params
 

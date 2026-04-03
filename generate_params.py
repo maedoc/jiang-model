@@ -4,7 +4,6 @@ Generate real-world parameters for DDE model.
 
 import json
 import numpy as np
-import jax.numpy as jnp
 from data_loader import (
     real_world_parameters,
     REGIONS,
@@ -69,12 +68,12 @@ def scale_parameters(
 
     # Convert back to JAX arrays
     params_scaled = params.copy()
-    params_scaled["oil_production"] = jnp.array(oil_prod_scaled)
-    params_scaled["oil_consumption"] = jnp.array(oil_cons_scaled)
-    params_scaled["fertilizer_production"] = jnp.array(fert_prod_scaled)
-    params_scaled["fertilizer_consumption"] = jnp.array(fert_cons_scaled)
-    params_scaled["water_availability"] = jnp.array(water_avail_scaled)
-    params_scaled["water_consumption"] = jnp.array(water_cons_scaled)
+    params_scaled["oil_production"] = np.array(oil_prod_scaled)
+    params_scaled["oil_consumption"] = np.array(oil_cons_scaled)
+    params_scaled["fertilizer_production"] = np.array(fert_prod_scaled)
+    params_scaled["fertilizer_consumption"] = np.array(fert_cons_scaled)
+    params_scaled["water_availability"] = np.array(water_avail_scaled)
+    params_scaled["water_consumption"] = np.array(water_cons_scaled)
 
     return params_scaled
 
@@ -176,7 +175,7 @@ def add_stability_coupling(params, region_names):
     # Ensure diagonal zero
     np.fill_diagonal(coupling, 0)
 
-    params["stability_coupling"] = jnp.array(coupling)
+    params["stability_coupling"] = np.array(coupling)
     return params
 
 
@@ -184,7 +183,7 @@ def save_parameters(params, filename="real_params.json"):
     """Convert JAX arrays to lists and save as JSON."""
     params_dict = {}
     for key, value in params.items():
-        if isinstance(value, jnp.ndarray):
+        if isinstance(value, np.ndarray):
             params_dict[key] = value.tolist()
         else:
             params_dict[key] = value
@@ -199,7 +198,7 @@ def load_parameters(filename="real_params.json"):
         params_dict = json.load(f)
     params = {}
     for key, value in params_dict.items():
-        params[key] = jnp.array(value)
+        params[key] = np.array(value)
     return params
 
 
@@ -251,7 +250,7 @@ def main():
 
     # Add political stability index
     stability = load_political_stability()
-    params_scaled["political_stability"] = jnp.array(stability)
+    params_scaled["political_stability"] = np.array(stability)
 
     # Compute trade matrices based on scaled production/consumption
     oil_prod = np.array(params_scaled["oil_production"])
@@ -265,19 +264,19 @@ def main():
         oil_prod, oil_cons, fert_prod, fert_cons
     )
     water_trade = compute_water_trade_flow(water_avail, water_cons)
-    params_scaled["oil_trade_flow"] = jnp.array(oil_trade)
-    params_scaled["fertilizer_trade_flow"] = jnp.array(fert_trade)
-    params_scaled["water_trade_flow"] = jnp.array(water_trade)
+    params_scaled["oil_trade_flow"] = np.array(oil_trade)
+    params_scaled["fertilizer_trade_flow"] = np.array(fert_trade)
+    params_scaled["water_trade_flow"] = np.array(water_trade)
     # Keep old keys for compatibility (set to zeros)
-    params_scaled["oil_trade"] = jnp.zeros_like(oil_trade)
-    params_scaled["fertilizer_trade"] = jnp.zeros_like(fert_trade)
+    params_scaled["oil_trade"] = np.zeros_like(oil_trade)
+    params_scaled["fertilizer_trade"] = np.zeros_like(fert_trade)
 
     # Compute capital flow and financial coupling matrices
     trade_matrices = [oil_trade, fert_trade, water_trade]
     capital_flow = compute_capital_flow(trade_matrices, stability)
     financial_coupling = compute_financial_coupling(trade_matrices, stability)
-    params_scaled["capital_flow"] = jnp.array(capital_flow)
-    params_scaled["financial_coupling"] = jnp.array(financial_coupling)
+    params_scaled["capital_flow"] = np.array(capital_flow)
+    params_scaled["financial_coupling"] = np.array(financial_coupling)
 
     # Add stability coupling
     params_scaled = add_stability_coupling(params_scaled, REGIONS)
