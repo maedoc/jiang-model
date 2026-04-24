@@ -34,6 +34,9 @@ print(traj.summary())
 | `example_sanctions.py` | Russia oil embargo and bilateral sanctions |
 | `example_sensitivity.py` | Parameter sweeps and Morris screening |
 | `example_price_trade.py` | Price-mediated trade extension |
+| `example_multi_chokepoint.py` | Hormuz + Malacca + Panama compound shock |
+| `example_naval_blockade.py` | ME→China and ME+RU→China naval blockade |
+| `test_empirical_constraints.py` | Verification that updated interventions match empirical bounds |
 
 Each script generates PNG figures and prints summary tables to stdout.
 
@@ -176,11 +179,23 @@ best_params = cal.calibrate()
 - **Financial**: Central banks, IMF — interest rates, debt/GDP, exchange rates
 - **Trade matrices**: Estimated from production–consumption surpluses
 
-## References
+## References and Empirical Grounding
 
-- Methodology inspired by macroeconomic DSGE models and ecological Lotka–Volterra systems
-- SciPy BDF solver for stiff ODE integration
-- NumPy for vectorized computation
+Intervention severities and onset parameters are constrained by empirical data
+from official energy and defense sources:
+
+- **EIA** World Oil Transit Chokepoints (2024) — Hormuz, Malacca, Panama throughput
+- **IEA** Strait of Hormuz Factsheet (June 2025) — flow-collapse scenarios
+- **CSIS** "How War with Iran Could Disrupt Energy Exports" (2025) — AIS vessel data
+- **ANRPC** (1H2025) — Malacca flow shares by destination
+- **RAND** RRA591-1 "Alternative Futures Following a Great Power War" (2023) — distant blockade economics
+- **DoD Comptroller** FY2026 Budget Request — $961.6B, +11.8% YoY
+- **Reuters** "Pentagon approaches automakers" (April 2026) — GM/Ford talks
+- **Energy Institute** Statistical Review of World Energy 2024 — regional production vs consumption
+- **IEA** Oil Market Report (April 2026) — 2.6 mb/d supply swing during Hormuz crisis
+
+See `outputs/chokepoint-empirical-constraints-brief.md` for the full research brief
+with numbered citations and model-parameter recommendations.
 
 ## License
 
