@@ -49,9 +49,9 @@ Interpretation:
 
 | Figure | Description |
 |--------|-------------|
-| ![Morris screening](../assets/scenarios/sensitivity_morris.png) | Elementary-effect ranking |
-| ![ME oil price](../assets/scenarios/sensitivity_me_oil.png) | Parameter sweep: oil price vs. Middle-East disruption |
-| ![Trade scale](../assets/scenarios/sensitivity_trade_scale.png) | Parameter sweep: trade-scale coefficient |
+| ![Morris screening](assets/scenarios/sensitivity_morris.png) | Elementary-effect ranking |
+| ![ME oil price](assets/scenarios/sensitivity_me_oil.png) | Parameter sweep: oil price vs. Middle-East disruption |
+| ![Trade scale](assets/scenarios/sensitivity_trade_scale.png) | Parameter sweep: trade-scale coefficient |
 
 ## Typical workflow
 
