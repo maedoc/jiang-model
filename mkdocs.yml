@@ -1,0 +1,104 @@
+site_name: Geopolitical Resource Dynamics Model
+site_description: >
+  A nonlinear dynamical-systems model simulating resource, economic,
+  and political interactions across 12 geopolitical regions.
+site_url: https://duke.github.io/jiang-model/
+repo_name: duke/jiang-model
+repo_url: https://github.com/duke/jiang-model
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.tabs.link
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            docstring_style: numpy
+  - glightbox
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Model Specification:
+    - Overview: model/overview.md
+    - Regions & State Variables: model/variables.md
+    - Mathematical Specification: model/equations.md
+    - Nonlinear Thresholds: model/thresholds.md
+    - ModelConfig Parameters: model/config.md
+    - Regional Parameters: model/regional_params.md
+  - API Reference:
+    - Core Model: api/geopolitical_model.md
+    - Interventions: api/interventions.md
+    - Trajectory & Comparison: api/trajectory.md
+    - Scenarios: api/scenarios.md
+    - Sensitivity & Calibration: api/sensitivity.md
+    - Data Loading: api/data_loader.md
+  - Scenarios:
+    - Overview: scenarios/overview.md
+    - Hormuz Strait Closure: scenarios/hormuz.md
+    - Malacca Strait Disruption: scenarios/malacca.md
+    - Panama Canal Disruption: scenarios/panama.md
+    - Russia Oil Embargo: scenarios/russia_embargo.md
+    - Bilateral Sanctions: scenarios/sanctions.md
+    - Price-Mediated Trade: scenarios/price_trade.md
+    - Multi-Chokepoint: scenarios/multi_chokepoint.md
+    - Naval Blockade: scenarios/naval_blockade.md
+    - Global Refinery Sabotage: scenarios/refinery_sabotage.md
+  - Empirical Grounding:
+    - Overview: empirical/overview.md
+    - Chokepoint Throughput Data: empirical/chokepoints.md
+    - Naval Blockade Precedents: empirical/blockades.md
+    - Defense Spending & War Economy: empirical/defense.md
+    - Production & Consumption Balances: empirical/energy_balances.md
+    - Refinery Capacity Data: empirical/refineries.md
+    - Confirmed Hypotheses: empirical/confirmed.md
+    - Partially Supported: empirical/partial.md
+    - Rejected / Unverified: empirical/rejected.md
+  - Data Sources: data_sources.md
+  - Calibration: calibration.md
+  - Sensitivity Analysis: sensitivity.md
+  - Research Briefs: research_briefs.md
+  - Game Theory Transcripts: transcripts.md
