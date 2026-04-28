@@ -4,7 +4,17 @@
 
 The Strait of Hormuz is a narrow waterway barely 21 miles wide at its narrowest point, yet it carries roughly **20 million barrels per day** of crude oil and petroleum products—between one-fifth and one-quarter of all oil traded by sea. Approximately **80% of this oil flows to Asia**, primarily China, India, Japan, and South Korea. For these economies, Hormuz is not merely a convenient shipping lane; it is the aorta of industrial civilization.
 
-A closure does not require sinking dozens of tankers. The Iran-Iraq Tanker War (1984–1988) demonstrated that **asymmetric maritime harassment**—mines, small-boat swarm attacks, missile threats—can collapse insurance markets within days. Lloyd's of London withdrew coverage entirely from some Gulf routes during that conflict, and war-risk premiums surged from negligible levels to **1–7% of hull value per voyage**. Shipowners, not admirals, decided to reroute. Physical damage to vessels was modest (~2–4% of flows temporarily interrupted), yet Iran's oil exports fell by 50–60%.
+A closure does not require sinking dozens of tankers. The Iran-Iraq Tanker War (1984–1988) demonstrated that **asymmetric maritime harassment**—mines, small-boat swarm attacks, missile threats—can collapse insurance markets within days. Lloyd's of London withdrew coverage entirely from some Gulf routes during that conflict, and war-risk premiums surged from negligible levels to **1–7% of hull value per voyage**. Shipowners, not admirals, decided to reroute.
+
+**Verified historical statistics (Lloyd's / UPI / Lloyd's List):**
+- **Attacks by Iraq**: 283 vessels over the eight-year conflict (Lloyd's List, March 2026, citing Lloyd's historical records)
+- **Attacks by Iran**: 168 vessels over the same period
+- **Lloyd's 1987 tally**: 333 ships attacked since the shipping war began in May 1981 (UPI, July 1987)
+- **Lloyd's estimated losses**: $80 million from attacks on neutral vessels in the first three weeks of the 1984 escalation alone (UPI, May 1984)
+- **Premium trajectory**: 0.5% (March 1984) → 3% for Kharg Island cargoes by May 1984 → ~5% typical during the Tanker War (Lloyd's List, March 2026). This is a **600% increase in the first two months**.
+- **Behavioral impact**: Norwegian Shipowners Association urged members to exit the Gulf; Japanese shippers ordered vessels to leave; yet some oil firms continued chartering if Iran discounted crude to offset insurance costs
+
+Physical damage to vessels was modest (~2–4% of flows temporarily interrupted), yet Iran's oil exports fell by 50–60%.
 
 This is the mechanism the model captures: a chokepoint disruption triggered at day 100 with an 80% severity ramp over 10 days. The severity parameter is calibrated against the empirically observed **83% flow reduction** reported by the IEA in April 2026.
 

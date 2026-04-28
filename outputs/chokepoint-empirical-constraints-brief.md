@@ -48,17 +48,22 @@ This brief compiles empirical data from official energy and defense sources to c
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| 2024 oil throughput | **~22.5–23.7 mb/d** | EIA, ANRPC |
-| Share of world maritime oil trade | **~28–30%** | EIA 2024/2025 |
-| Combined with Hormuz share | **~57% of all seaborne oil trade** | EIA |
-| Crude + condensate (1H2025) | **16.6 mb/d** | ANRPC |
-| Petroleum products (1H2025) | **6.5 mb/d** | ANRPC |
-| LNG (1H2025) | **~9.2 bcf/d** | ANRPC |
-| Major OPEC supply share | **~60% of crude through Malacca** | ANRPC |
-| **China imports via Malacca** | **~7.9 mb/d (~48% of China's imports via this route)** | ANRCP 1H2025 |
-| South Korea via Malacca | **~2.4 mb/d** | ANRPC |
-| Japan via Malacca | **~2.1 mb/d** | ANRPC |
-| Alternative routes | Sunda/Lombok Straits, Myanmar–China pipeline (limited, longer voyages) | EIA |
+| 1H2025 oil throughput | **23.2 mb/d** | EIA / ANRPC — **world's largest chokepoint by volume** |
+| Share of world maritime oil trade | **29%** | EIA 1H2025 |
+| Crude + condensate (1H2025) | **16.6 mb/d** | EIA / ANRPC |
+| Petroleum products (1H2025) | **6.5 mb/d** | EIA / ANRPC |
+| LNG (1H2025) | **9.2 bcf/d** | EIA / ANRPC |
+| Gulf OPEC crude share | **~60%** (Saudi, UAE, Kuwait, Iraq) | EIA / ANRPC |
+| **China imports via Malacca** | **7.9 mb/d = 48% of import volumes through the strait** | EIA / ANRPC 1H2025 |
+| South Korea via Malacca | **2.4 mb/d** | EIA / ANRPC |
+| Japan via Malacca | **2.1 mb/d** | EIA / ANRPC |
+| Iran via Malacca | **1.6 mb/d** (up from 0.3 in 2020, despite sanctions) | EIA / ANRPC |
+| Russia via Malacca | **0.4 mb/d** | EIA / ANRPC |
+| USA (Atlantic coast → East Asia) via Malacca | **0.8 mb/d** | EIA / ANRPC |
+| Alternative: Myanmar–China pipeline | **Limited capacity; not a viable large-scale alternative** | EIA |
+| Alternative: Sunda/Lombok straits | **Add ~6,000 nm, ~10–14 days** | EIA / Reuters |
+
+**Model constraint:** Malacca disruption is arguably *more* damaging to China than Hormuz closure alone, since it is the conduit for most non-Russian oil reaching East Asia. Even if Hormuz were bypassed via pipeline, Malacca is the only practical sea route to China/Japan/Korea. A combined Hormuz+Malacca shock would trap **~60–70% of China's oil imports**. The 48% China figure is **directly confirmed** by EIA/ANRPC 1H2025 data.
 
 **Model constraint:** Malacca disruption is arguably *more* damaging to China than Hormuz closure alone, since it is the conduit for most non-Russian oil reaching East Asia. Even if Hormuz were bypassed via pipeline, Malacca is the only practical sea route to China/Japan/Korea. A combined Hormuz+Malacca shock would trap **~60–70% of China's oil imports**.
 
@@ -96,21 +101,27 @@ This brief compiles empirical data from official energy and defense sources to c
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| Ships attacked | **~544** | Lloyd's of London / USNI / Strauss Center |
-| Tankers attacked | **~400+** | Strauss Center |
+| Ships attacked by Iraq | **283** | Lloyd's List (March 2026), citing Lloyd's historical records |
+| Ships attacked by Iran | **168** | Lloyd's List (March 2026), citing Lloyd's historical records |
+| Total ships attacked (Lloyd's 1987 tally) | **~333 since May 1981** | UPI / Lloyd's casualty reporting officer, July 1987 |
 | Ships sunk | **~50–70** | Historical consensus |
 | Crew killed/kidnapped | **~400+** | USNI |
 | Iran oil export reduction (peak) | **~50–60%** | Multiple sources |
 | Kharg Island throughput (pre-war) | **~3–4 mb/d** | Historical |
 | Kharg Island throughput (war) | **<2 mb/d** | Historical |
-| War-risk insurance premium surge | **1–7% of hull value per voyage** | Lloyd's / Strauss Center |
+| War-risk premium (March 1984 baseline) | **0.5%** of cargo value | UPI / Lloyd's, May 1984 |
+| War-risk premium (May 1984, Kharg Island) | **3%** of cargo value | UPI / Lloyd's, May 1984 — **600% increase in 2 months** |
+| War-risk premium (typical during Tanker War) | **~5%** of hull value | Lloyd's List retrospective, March 2026 |
 | Some insurers | **Withdrew entirely** from Gulf coverage | Strauss Center |
 | Actual flow disruption (Gulf exports) | **~2–4% temporarily interrupted** | Strauss Center |
+| Lloyd's estimated neutral-vessel losses (early 1984) | **$80 million** (first 3 weeks) | UPI, May 1984 |
 | Price impact | **~$28 → $30–35+/barrel** | Historical |
 | Duration | **~4 years** (1984–1988) | Historical |
 | US Operation Earnest Will | Reflagged **11 Kuwaiti tankers** | USNI |
 
 **Strategic lesson (Strauss Center):** "Only ~544 attacks over 4 years against thousands of transits, yet the economic impact was enormous — insurance costs drove behavior more than physical damage."
+
+**Verified premium trajectory:** Lloyd's data (UPI, May 1984) shows premiums for Kharg Island cargoes jumped from 0.5% to 3% in two months—a 600% increase. A Lloyd's retrospective (March 2026) confirms the typical Tanker War rate was ~5%. This validates the model's implicit assumption that insurance-driven avoidance is the dominant transmission mechanism, not physical destruction.
 
 **Model constraint:** Asymmetric maritime harassment can collapse traffic with minimal physical destruction. The model's `chokepoint_disruption` should have a **nonlinear threshold**: even low-severity physical attacks (severity = 0.1–0.2) can trigger near-total traffic avoidance via insurance/fear effects.
 
@@ -131,8 +142,8 @@ RAND's Air Force study modeled a U.S. distant blockade in a Taiwan conflict scen
 
 - Waterborne commercial shipping into China was **"dramatically reduced"**
 - Blockade duration modeled: **3–8 months**
-- Estimated GDP impact on China: **10–35% decline** (year-long severe war = 25–35%; 8-month war = 10–20%)
-- Estimated U.S. GDP impact: **less than half** of China's
+- Estimated GDP impact on China: **10–20% decline** (shorter war) or **25–35% decline** (year-long severe war), per RAND RR-1140-A (Gompert, Cevallos, and Garafola, 2016), cited in RRA591-1 Chapter 4 fn. 221
+- Estimated U.S. GDP impact: **less than half** of China's (qualitative; no exact ratio in primary source)
 - Even post-ceasefire, a **"China risk premium"** persisted, causing permanent supply-chain relocation
 - China's overland alternatives (Russia, Pakistan, Laos, Myanmar) provided only **partial mitigation**
 - Historical analogy: Japan's 1941 response to U.S. oil embargo — "intolerable" blockade induced escalation

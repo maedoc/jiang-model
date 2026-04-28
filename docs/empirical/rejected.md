@@ -55,6 +55,28 @@ Any model scenario treating defense-industrial conversion as an instantaneous su
 
 ---
 
+## 4. "$200 billion+" fertilizer sanctions shock
+
+**GT#21 claim:** A fertilizer/energy sanctions cascade produces a **$200 billion+** macroeconomic shock.
+
+**Why it fails:**
+
+| Search domain | Result |
+|-------------|--------|
+| `grep -riE '\$?200[\s,]*billion' docs/ scenarios/ outputs/` | **Zero matches** |
+| `grep -riE '200bn|200 billion' docs/ scenarios/ outputs/` | **Zero matches** |
+| Web search for "$200 billion fertilizer sanctions" | No empirical source found; only fictional 2026 scenario pieces (e.g., CFOTimes "$10B silent crisis", FinancialContent speculative timeline) |
+
+The **$200B+ figure does not appear anywhere in the repository's code, documentation, or empirical trackers**. It may have been mentioned in an earlier narrative draft that was later removed, or it may be a misremembered placeholder. In any case, there is no independent empirical source—government, IEA, FAO, or academic—that validates a $200 billion fertilizer-shock estimate. The closest documented figures are:
+
+- **2022 Russia-Ukraine fertilizer shock:** Global fertilizer prices rose ~20–40% (IEA/FAO), with acute but localized fiscal impacts.
+- **2026 speculative scenarios:** CFOTimes modeled a "$10B" fertilizer crisis; Albis.news discussed cascade economics but provided no hard $200B figure.
+
+**Model behavior:** Any scenario relying on a $200B+ fertilizer shock should be treated as **unverified narrative**. If the claim is intended to represent a global food-system shock, it should be re-parameterized using verified 2022–2024 fertilizer price elasticities and IEA/FAO supply data.
+
+!!! failure "Rejected / Phantom Target"
+    Claim not found in repository and lacks any independent empirical source.
+
 ## Summary table
 
 | Claim | Status | Primary contradicting source |
@@ -62,3 +84,4 @@ Any model scenario treating defense-industrial conversion as an instantaneous su
 | 50 refinery fires = 10–15% capacity | **Rejected** | IEA outage ceiling |
 | Malacca model effect = real effect | **Rejected** | EI/ANRPC ASEAN net importer |
 | Full GM/Ford instant conversion | **Rejected** | Reuters "preliminary talks" |
+| $200B+ fertilizer sanctions shock | **Rejected / Phantom** | Not found in repo; no empirical source |

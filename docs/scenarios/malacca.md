@@ -4,7 +4,21 @@
 
 If Hormuz is the aorta, Malacca is the jugular. The strait carries roughly **22.5–23.7 million barrels per day** of oil—more than Hormuz by volume—and approximately **28–30% of all maritime oil trade globally**. Unlike Hormuz, where Saudi Arabia and the UAE have invested billions in pipeline bypasses, **Malacca has no practical alternative**. The Sunda and Lombok straits exist, but they add roughly 6,000 nautical miles to the voyage from the Middle East to East Asia. The Myanmar–China pipeline is operational but carries only a fraction of China's demand.
 
-This is why strategists in Beijing view Malacca with far greater anxiety than Hormuz. Chinese strategic literature has coined the term **"Malacca Dilemma"** to describe the existential vulnerability of having 48% of total oil imports (and roughly 80% of seaborne imports) pass through a single chokepoint controlled by multiple nations—Malaysia, Indonesia, and Singapore—each of which hosts a significant U.S. military presence or defense relationship.
+This is why strategists in Beijing view Malacca with far greater anxiety than Hormuz. Chinese strategic literature has coined the term **"Malacca Dilemma"** to describe the existential vulnerability of having **48% of total oil imports** (and roughly 80% of seaborne imports) pass through a single chokepoint controlled by multiple nations—Malaysia, Indonesia, and Singapore—each of which hosts a significant U.S. military presence or defense relationship.
+
+**EIA/ANRPC 1H2025 verified data:**
+- **Total oil throughput**: 23.2 mb/d — **largest chokepoint in the world by volume**
+- **Share of global maritime oil trade**: 29%
+- **Crude oil + condensate**: 16.6 mb/d
+- **Petroleum products**: 6.5 mb/d
+- **LNG**: 9.2 Bcf/d
+- **Gulf OPEC crude share**: ~60% (Saudi Arabia, UAE, Kuwait, Iraq)
+- **China imports via Malacca**: **7.9 mb/d = 48% of import volumes through the strait**
+- **South Korea**: 2.4 mb/d
+- **Japan**: 2.1 mb/d
+- **Iran (despite sanctions)**: 1.6 mb/d (up from 0.3 mb/d in 2020)
+- **Russia**: 0.4 mb/d
+- **USA Atlantic coast to East Asia**: 0.8 mb/d
 
 ## Why this scenario matters
 

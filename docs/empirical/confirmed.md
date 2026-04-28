@@ -46,12 +46,12 @@ These are claims from Game Theory #21 (and related narratives) that are supporte
 | Precedent | Sender stability effect | Receiver stability effect | Source |
 |-----------|------------------------|--------------------------|--------|
 | Iran-Iraq Tanker War | Exporters partially resilient | Importers devastated | Lloyd's, Strauss Center |
-| RAND distant blockade | "Less than half" of China's GDP impact | 10–35% China GDP decline | RAND RRA591-1 |
+| RAND distant blockade (cited in RRA591-1) | Not quantified as a ratio in primary source | **10–20%** decline (shorter war); **25–35%** decline (year-long severe war) | RAND RR-1140-A (Gompert, Cevallos, and Garafola, 2016), referenced in RRA591-1 fn. 221 |
 
 **Model output:** `naval_blockade(sender=ME, receiver=China)` shows China stability falling while Middle East stability rises (reduced outbound dependency).
 
 !!! success "Confirmed"
-    Asymmetry validated by Tanker War historical data and RAND simulation.
+    Asymmetry validated by Tanker War historical data and RAND simulation. **Note:** The specific GDP percentages are drawn from RR-1140-A (Table/footnote cited in RRA591-1 Chapter 4), not原创 in RRA591-1 itself. The commonly cited "10–35%" range is a composite of two separate estimates (10–20% for shorter wars, 25–35% for year-long severe wars).
 
 ---
 

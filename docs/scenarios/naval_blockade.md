@@ -22,7 +22,7 @@ Historical precedent provides some guidance:
 |----------|-----------|-----------------|-------------------|
 | Iran-Iraq Tanker War | Mines, missile attacks on Hormuz | ~50–60% of Iranian exports | Stalemate; ended via UN ceasefire |
 | Red Sea Crisis (2023–24) | Houthi drone/missile attacks | ~42% Suez transit drop | U.S. air strikes on Yemen; no wider war |
-| RAND distant blockade (hypothetical) | U.S. naval interdiction of China-bound shipping | "Dramatically reduced" | Modeled as limited war scenario; China GDP −10% to −35% |
+| RAND distant blockade (hypothetical) | U.S. naval interdiction of China-bound shipping | "Dramatically reduced" | Modeled as limited war scenario; China GDP **−10% to −20%** (shorter war) or **−25% to −35%** (year-long severe war) per RR-1140-A, cited in RRA591-1 |
 
 The model's naval blockade parameters are calibrated against this range:
 - **Severity 0.9**: Near-total interdiction of targeted bilateral flows. This assumes the U.S. has sufficient naval assets to cover the main shipping routes from the Middle East to China.
@@ -81,7 +81,7 @@ The stability panel reveals an **asymmetric pattern**:
 
 The model captures a phenomenon rarely discussed in blockade analysis: **senders can benefit economically from being blockaded**. When Middle Eastern oil cannot reach China, it does not disappear. It remains in Middle Eastern storage. Domestic energy becomes cheaper. Local industries gain a cost advantage. Governments no longer need to manage complex international relationships.
 
-This is the **sender's paradox**: a blockade that is intended to punish China may inadvertently **stabilize the sender**. The RAND simulations (RRA591-1) partially capture this by modeling GDP declines for China that are **twice as large** as GDP declines for the sender. But the ODE model adds a deeper mechanism: the feedback between domestic resource abundance and political stability.
+This is the **sender's paradox**: a blockade that is intended to punish China may inadvertently **stabilize the sender**. RAND RRA591-1 notes that China's economy suffers disproportionately under a distant blockade, but it does not quantify a specific sender-to-receiver GDP ratio. The ODE model adds a deeper mechanism: the feedback between domestic resource abundance and political stability.
 
 Of course, this paradox has limits. If the blockade persists for years, the sender's loss of export revenue eventually overwhelms the domestic stock buildup. The model's 365-day horizon is too short to show this reversal.
 
@@ -91,7 +91,7 @@ Of course, this paradox has limits. If the blockade persists for years, the send
 |-----------|----------------|---------------------------|--------|
 | Iran-Iraq Tanker War (1984–88) | ~2–4% of flows physically damaged | ~50–60% traffic avoided | Lloyd's, Strauss Center, USNI |
 | Red Sea / Bab el-Mandeb (2023–24) | Modest vessel damage | 42% Suez transit drop; 60–70% container diversion | Reuters, shipping analysts |
-| RAND distant blockade (hypothetical) | None (legal interdiction) | "Dramatically reduced"; 10–35% China GDP decline | RAND RRA591-1 |
+| RAND distant blockade (hypothetical) | None (legal interdiction) | "Dramatically reduced"; China GDP decline **10–20%** (shorter war) or **25–35%** (year-long severe war) | RAND RR-1140-A (cited in RRA591-1 fn. 221) |
 | U.S. boarding operations (2026 claims) | Minimal | Unverified at scale | GT#21 narrative (unconfirmed) |
 
 ## Validation status
