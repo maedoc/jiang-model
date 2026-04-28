@@ -82,3 +82,42 @@ The Geopolitical Resource Dynamics Model (Jiang-Model) describes 9 energy-securi
 | RAND blockade study | Direct fetch of RRA591-1 PDF + cross-check RR-1140-A | **Verified with correction** | GDP figures are from RR-1140-A (10–20% shorter war; 25–35% year-long), cited in RRA591-1 fn. 221; "10–35%" is a composite range. "Twice as large" sender/receiver ratio not found in RAND text. |
 | IEA 2.5% ceiling | Direct fetch of IEA Oil Market Report supply tables | **Confirmed** | IEA April 2026 OMR: 2.6 mb/d swing ≈ 2.5% global supply; 50 fires claim rejected |
 | Price elasticity 0.5 | Search NBER/CEPR energy trade elasticity papers | **Partial** | Brancaccio et al. (2021) mean=0.35, range 0.1–1.2; 0.5 is within range but uncalibrated for oil demand (Kilian-Murphy 2014: −0.26 demand elasticity) |
+| **Peer Review (DeepSeek-v4-Pro)** | **Independent review of all synthesis briefs and docs** | **Completed** | See `outputs/peer-review-deepseek-v4-pro.md`. Verdict: Draft audit accepted with conditions. Critical vulnerability: IEA 83% single-source dependency. Major omission: zero water-trade validation. RAND correction and phantom rejection praised. |
+
+## Peer-Review Feedback Integration
+
+### Critical actions required (DeepSeek Priority 1)
+1. **[Hormuz 83%]**: Verify IEA factsheet directly. Try IEA press archive, Wayback Machine, or search Reuters/Platts/Bloomberg for independent corroboration.
+2. **[Water trade]**: Zero empirical validation across all 8 streams. Must state explicitly in all docs that water outputs are unverified.
+3. **[Trade elasticity]**: 0.5 applied uniformly to oil, fertilizer, water. DeepSeek flags water as near-zero flexibility. Needs commodity-specific parameters.
+
+### Corrections to implement (DeepSeek Priority 2)
+- Downgrade Hormuz 83% from "Confirmed" → "Partially Supported — primary source pending"
+- Remove "Twice as large" ratio claims everywhere (not in RAND text)
+- Rename `price_trade_elasticity` → `shipping_cost_trade_elasticity`
+- Separate "model predictions" from "empirical constraints" in docs
+- Add UNCLOS violation flags to naval blockade scenarios
+
+### Academic sources to add (DeepSeek Priority 3)
+- Navias & Hooton (1996) or Cordesman (1987) for Tanker War data
+- Kilian (2008, AER), Hamilton (2009) for oil supply shock macro effects
+- Barrot & Sauvagnat (2016, QJE) or Carvalho et al. (2021, Econometrica) for trade-network fragility
+
+### Model self-consistency tests (DeepSeek Priority 4)
+- Single vs. pair vs. triple chokepoint comparison (tests "compounding" claim)
+- Sensitivity grid: `price_trade_elasticity` at 0.1, 0.3, 0.5, 0.7, 1.0
+- 365-day vs. 730-day horizon (tests truncation effects)
+
+## Updated Task Ledger
+| ID | Owner | Task | Status | Output |
+|---|---|---|---|---|
+| T1 | R1 | Hormuz historical precedent + Malacca data | **Complete** | `outputs/credibility-historical.md` |
+| T2 | R2 | Sanctions/fertilizer + naval blockade feasibility | **Complete** | `outputs/credibility-policy.md` |
+| T3 | R3 | Network compounding + trade elasticity | **Complete** | `outputs/credibility-networks.md` |
+| T4 | Lead | Synthesize brief, claim sweep, update docs | **Complete** | 11 files updated |
+| **T5** | **DeepSeek** | **Independent peer review** | **Complete** | `outputs/peer-review-deepseek-v4-pro.md` |
+| T6 | Lead | Fix IEA 83% single-source vulnerability | **Next** | Direct primary-source verification |
+| T7 | Lead | Water-trade validation gap documentation | **Next** | Add "unverified" warnings to water docs |
+| T8 | Lead | Academic literature sweep (Navias, Cordesman, Kilian) | **Next** | Add peer-reviewed citations |
+| T9 | Lead | Model self-consistency tests (chokepoint combos + elasticity grid) | **Next** | Run simulations, add results |
+| T10 | Lead | Commodity-specific trade elasticity (oil/fertilizer/water) | **Next** | Parameter documentation update |
